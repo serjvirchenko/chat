@@ -9,6 +9,31 @@
  */
 angular.module('chatApp')
   .controller('MainCtrl', function ($scope, main) {
-      $scope.groups = main.getGroups();
-      $scope.users = main.getUsers();
+      $scope.myuserId = 10;
+      $scope.main = main;
+
+      $scope.id = 1;
+
+      $scope.getMess = function(arr, id){
+          $scope.body = '';
+          $scope.body = main.getMessages(arr, id);
+          $scope.id = id;
+      }
+      $scope.isActive = function(id){
+          return $scope.id === id;
+      }
+      $scope.getMess(main.getGroups(), $scope.id);
+
+      $scope.push = function(event, dialog){
+          if(event.type == 'submit' || event.type == 'keypress' && event.which == '13'){
+              if($scope.textarea !== '' && $scope.textarea != undefined){
+                  dialog.messages.push({
+                      date: +new Date(),
+                      message: $scope.textarea,
+                      user: $scope.myuserId,
+                  });
+                  $scope.textarea = '';
+              }
+          }
+      }
   });

@@ -15,7 +15,13 @@ angular.module('chatApp')
             id: '1',
             name: 'MaxiModus',
             newmess: '34',
-            avatar: ''
+            avatar: '',
+            users: users,
+            messages: [
+                {
+                    'date': '1461592739445',
+                }
+            ]
         }
     ]
     var users = [
@@ -24,14 +30,20 @@ angular.module('chatApp')
             name: 'Thomas Brown',
             newmess: '3',
             avatar: 'http://www.allure.com/images/allure-magazine/2015/04/reading-faces.jpg',
-            online: true
+            online: true,
+            messages: [
+                {date: '1463597739445', message: 'hello, I am fine', user: '2'}, {date:'1463597739545', message: 'how are you?', user: '2'},{date:'1463597939545', message: 'hi, how are you?', user: '10'}
+            ]
         },
         {
             id: '3',
             name: 'Edward LeCristen',
             newmess: '',
             avatar: 'http://all4desktop.com/data_images/original/4242445-face.jpg',
-            online: false
+            online: false,
+            messages: [
+                {date: '1463597739445', message: 'hello, I am fine', user: '2'}, {date:'1463597739545', message: 'how are you?', user: '2'},{date:'1463597939545', message: 'hi, how are you?', user: '10'}
+            ]
         },
         {
             id: '4',
@@ -45,7 +57,10 @@ angular.module('chatApp')
             name: 'Sendy Miller',
             newmess: '',
             avatar: 'http://efdreams.com/data_images/dreams/face/face-08.jpg',
-            online: true
+            online: true,
+            messages: [
+                {date: '1463597739445', message: 'hello, I am fine', user: '2'}, {date:'1463597739545', message: 'how are you?', user: '2'},{date:'1463597939545', message: 'hi, how are you?', user: '10'}
+            ]
         },
         {
             id: '6',
@@ -70,8 +85,14 @@ angular.module('chatApp')
         getUsers: function(){
             return users;
         },
-        getMessages: function(id){
-
+        getMessages: function(arr, id){
+            var obj;
+            angular.forEach(arr, function(value, key){
+                if(value.id == id){
+                    obj = value;
+                }
+            })
+            return obj;
         }
     };
   });

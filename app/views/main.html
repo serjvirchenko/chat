@@ -1,26 +1,26 @@
 <div class="chat-window">
     <div class="chat-sidebar">
         <header>
-            <input type="search" placeholder="Быстрый поиск">
+            <input type="search" placeholder="Быстрый поиск" ng-model="searchString">
             <a href="" class="edit"></a>
         </header>
         <section>
             <ul>
-                <li ng-repeat="group in groups">
-                    <a href="" class="person group">
+                <li ng-repeat="group in main.getGroups() | searchFor:searchString">
+                    <a href="" class="person group" ng-class="{'active' : group.id == id}" ng-click="getMess(main.getGroups(), group.id)">
                         <div class="avatar">
                             <p ng-if="group.avatar == ''" ng-bind="group.name.charAt(0)"></p>
-                            <div class="avatar-image" ng-if="group.avatar !== ''" bgimage="{{group.avatar}}"></div>
+                            <div class="avatar-image" bgimage="{{group.avatar}}"></div>
                         </div>
                         <div class="name" ng-bind="group.name"></div>
                         <div class="new-mess" ng-if="group.newmess && group.newmess !== 0" ng-bind="group.newmess"></div>
                     </a>
                 </li>
-                <li ng-repeat="user in users | orderBy:'-newmess'">
-                    <a href="" class="person">
+                <li ng-repeat="user in main.getUsers() | orderBy:'-newmess' | searchFor:searchString">
+                    <a href="" class="person" ng-class="{'active' : user.id == id}" ng-click="getMess(main.getUsers(), user.id)">
                         <div class="avatar">
                             <p ng-if="user.avatar == ''" ng-bind="user.name.charAt(0)"></p>
-                            <div class="avatar-image" ng-if="user.avatar !== ''" bgimage="{{user.avatar}}"></div>
+                            <div class="avatar-image" bgimage="{{user.avatar}}"></div>
                         </div>
                         <div class="name" ng-bind="user.name"></div>
                         <div class="new-mess" ng-if="user.newmess && user.newmess !== 0" ng-bind="user.newmess"></div>
@@ -32,71 +32,38 @@
     <div class="chat-body">
         <header>
             <div class="chat-name">
-                <div class="avatar">M</div>
-                <div class="name">MaximModus</div>
+                <div class="avatar">
+                    <p ng-if="body.avatar == ''" ng-bind="body.name.charAt(0)"></p>
+                    <div class="avatar-image" bgimage="{{body.avatar}}"></div>
+                </div>
+                <div class="name" ng-bind="body.name"></div>
             </div>
             <select name="" id="">
                 <option value="">8 участников</option>
             </select>
         </header>
         <section class="body">
-            <div class="messages">
-                <div class="message-wrapper">
+            <div class="messages" scroll="body.messages">
+                <div class="message-wrapper" ng-repeat="message in body.messages">
                     <div class="info">
-                        <a href="">Sandy Murphy</a>
-                        <span>Вчера, 20:12</span>
+                        <a href="" ng-if="message.user != myuserId" ng-bind="body.name"></a>
+                        <a href="" ng-if="message.user == myuserId">Вы</a>
+                        <span ng-bind="message.date | date: 'dd.MM.yyyy, hh:mm'" date="{{message.date}}"></span>
                     </div>
                     <div class="message">
-                        <a href="" class="avatar">М</a>
-                        <div class="text">Привет</div>
-                    </div>
-                </div>
-                <div class="message-wrapper">
-                    <div class="info">
-                        <a href="">Sandy Murphy</a>
-                        <span>Вчера, 20:12</span>
-                    </div>
-                    <div class="message">
-                        <a href="" class="avatar">М</a>
-                        <div class="text">Привет</div>
-                    </div>
-                </div>
-                <div class="message-wrapper">
-                    <div class="info">
-                        <a href="">Sandy Murphy</a>
-                        <span>Вчера, 20:12</span>
-                    </div>
-                    <div class="message">
-                        <a href="" class="avatar">М</a>
-                        <div class="text">Привет</div>
-                    </div>
-                </div>
-                <div class="message-wrapper">
-                    <div class="info">
-                        <a href="">Sandy Murphy</a>
-                        <span>Вчера, 20:12</span>
-                    </div>
-                    <div class="message">
-                        <a href="" class="avatar">М</a>
-                        <div class="text">Привет</div>
-                    </div>
-                </div>
-                <div class="message-wrapper">
-                    <div class="info">
-                        <a href="">Sandy Murphy</a>
-                        <span>Вчера, 20:12</span>
-                    </div>
-                    <div class="message">
-                        <a href="" class="avatar">М</a>
-                        <div class="text">Привет</div>
+                        <a href="" class="avatar">
+                            <p ng-if="body.avatar == ''" ng-bind="body.name.charAt(0)"></p>
+                            <div ng-if="message.user !== myuserId" class="avatar-image" bgimage="{{body.avatar}}"></div>
+                        </a>
+                        <div class="text" ng-bind="message.message"></div>
                     </div>
                 </div>
             </div>
         </section>
         <footer>
-            <form action="">
+            <form action="" ng-submit="push($event, body)" ng-keypress="push($event, body)">
                 <div>
-                    <textarea name="" id="" cols="20" rows="2" placeholder="Say message..."></textarea>
+                    <textarea name="" id="" ng-model="textarea" cols="20" rows="2" placeholder="Say message..."></textarea>
                     <div class="input-wrapper">
                         <input type="submit" value="">
                     </div>

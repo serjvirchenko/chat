@@ -7,7 +7,7 @@
  * # scroll
  */
 angular.module('chatApp')
-  .directive('scroll', function () {
+  .directive('scroll', function ($timeout) {
     return {
       restrict: 'A',
       link: function(scope, element, attr) {

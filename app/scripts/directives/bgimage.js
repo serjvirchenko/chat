@@ -8,10 +8,13 @@
  */
 angular.module('chatApp')
   .directive('bgimage', function () {
-      return function(scope, element, attrs){
-          var url = attrs.bgimage;
-          element.css({
-              'background-image': 'url(' + url +')'
-          });
-      };
+      return{
+          link: function(scope, element, attrs){
+              scope.$watch(function(){
+                  element.css({
+                      'background-image': 'url(' + attrs.bgimage +')'
+                  });
+              });
+          }
+      }
   });
