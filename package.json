@@ -40,5 +40,8 @@
   },
   "scripts": {
     "test": "karma start test\\karma.conf.js"
+  },
+  "dependencies": {
+    "readable-stream": "^2.1.2"
   }
 }
