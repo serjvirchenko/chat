@@ -19,7 +19,7 @@ angular.module('chatApp')
             users: users,
             messages: [
                 {
-                    'date': '1461592739445',
+                    'date': '1463597739445', message: 'hello, I am fine', user: '2'
                 }
             ]
         }

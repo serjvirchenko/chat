@@ -22,7 +22,7 @@ angular.module('chatApp')
                   var a = new Date(currentDate - attrs.date)
                   element.html(a.getHours() + ' час(ов) назад')
               } else if((currentDate - attrs.date) > 24 * 60 * 60 * 1000){
-                  element.html(messDate.getDate() + '.' + messDate.getMonth() + '.' + messDate.getFullYear() + ', ' + messDate.getHours() + ':' + messDate.getMinutes())
+                  element.html(messDate.getDate() + '.' + (messDate.getMonth() + 1) + '.' + messDate.getFullYear() + ', ' + messDate.getHours() + ':' + messDate.getMinutes())
               }
           })
       }

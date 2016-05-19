@@ -25,7 +25,10 @@ angular.module('chatApp')
       $scope.getMess(main.getGroups(), $scope.id);
 
       $scope.push = function(event, dialog){
-          if(event.type == 'submit' || event.type == 'keypress' && event.which == '13'){
+          if(event.type == 'keypress' && event.which == '10' && event.ctrlKey == true){
+              $scope.textarea += "\r\n";
+          }
+          if(event.type == 'submit' || (event.type == 'keypress' && event.which == '13' && event.ctrlKey == false)){
               if($scope.textarea !== '' && $scope.textarea != undefined){
                   dialog.messages.push({
                       date: +new Date(),
@@ -33,6 +36,7 @@ angular.module('chatApp')
                       user: $scope.myuserId,
                   });
                   $scope.textarea = '';
+                  console.log('s')
               }
           }
       }
